@@ -19,14 +19,13 @@ public class ClearChannelCommand extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        System.out.println("Message");
-        if (!event.getMessage().getContentRaw().contains("!clearChannel")) return;
+        if (!event.getMessage().getContentRaw().toLowerCase().contains("!clearchannel")) return;
 
-//        if (!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)) {
-//            event.getMessage().reply("You do not have permission to run this command.").mentionRepliedUser(false)
-//                    .queue();
-//            return;
-//        }
+        if (!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)) {
+            event.getMessage().reply("You do not have permission to run this command.").mentionRepliedUser(false)
+                    .queue();
+            return;
+        }
 
         event.getMessage().reply("Are you sure u want to delete all messages?").mentionRepliedUser(false)
                 .setActionRow(net.dv8tion.jda.api.interactions.components.Button.success("confirm", "confirm"),
@@ -60,6 +59,7 @@ public class ClearChannelCommand extends ListenerAdapter {
         } else if (event.getComponentId().equals("deny")) {
             if (!event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
                 event.deferEdit();
+                event.getMessage().delete().queue();
                 return;
             }
         }

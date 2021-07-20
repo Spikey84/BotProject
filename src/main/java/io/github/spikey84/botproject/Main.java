@@ -1,6 +1,8 @@
 package io.github.spikey84.botproject;
 
 import io.github.spikey84.botproject.listeners.ClearChannelCommand;
+import io.github.spikey84.botproject.listeners.HelpCommand;
+import io.github.spikey84.botproject.listeners.PingCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -25,7 +27,7 @@ public class Main extends ListenerAdapter {
         try {
             jda = JDABuilder.createDefault(token)
                     .setActivity(Activity.playing("code code code"))
-                    .addEventListeners(new ClearChannelCommand())
+                    .addEventListeners(new ClearChannelCommand(), new PingCommand(), new HelpCommand())
                     .build();
             System.out.println("Login Success!");
         } catch (LoginException e) {
